@@ -11,28 +11,36 @@ public class BSTIterator
 
 	public BSTIterator(TreeNode root)
 	{
-
+		init(root);
 	}
 
 	private void init(TreeNode node)
 	{
 		if (node != null)
 		{
-			//if (node)
+			stack.push(node);
+			if (node.left != null)
+			{
+				init(node.left);
+			}
 		}
 	}
 
 	/** @return whether we have a next smallest number */
 	public boolean hasNext()
 	{
-		return false;
-
+		return !stack.empty();
 	}
 
 	/** @return the next smallest number */
 	public int next()
 	{
-		return 0;
+		TreeNode node = stack.pop();
+		if (node.right != null)
+		{
+			init(node.right);
+		}
+		return node.val;
 	}
 }
 
