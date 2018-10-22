@@ -32,7 +32,7 @@ import java.util.Set;
 输出: 28
 
 
-解题思路： 1深度优先 2数学上排列组合
+解题思路： 1深度优先(可以优化到动态规划) 2数学上排列组合
  */
 public class UniquePaths
 {
