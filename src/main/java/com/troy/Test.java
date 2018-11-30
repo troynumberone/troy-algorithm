@@ -16,13 +16,25 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Test
 {
 
 
-	public static void main(String[] args){
-		System.out.println(LocalTime.of(9,0,0).toString());
+
+	public static void main(String[] args)
+	{
+		int[] a=new int[]{1,2};
+		int[] b=new int[]{3,4};
+		int[] c=new int[a.length+b.length];
+		System.arraycopy(a,0,c,0,a.length);
+		System.arraycopy(b,0,c,a.length,b.length);
+		System.out.println(Arrays.toString(c));
+
 	}
 }
