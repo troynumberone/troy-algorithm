@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author: xuboru on 2018/12/7
- * 简单的java自旋锁
+ * 简单的java自旋锁,不可重入
  */
 public class SpinLock
 {
