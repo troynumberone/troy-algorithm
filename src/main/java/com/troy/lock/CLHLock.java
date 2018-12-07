@@ -1,5 +1,7 @@
 package com.troy.lock;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -10,6 +12,11 @@ public class CLHLock
 	private class CLhNode
 	{
 		private boolean lock = false;
+
+		private CLhNode()
+		{
+			System.out.println("创建" + this);
+		}
 	}
 
 	private ThreadLocal<CLhNode> current = new ThreadLocal<>();
@@ -18,7 +25,8 @@ public class CLHLock
 
 	public CLHLock()
 	{
-		current.set(new CLhNode());
+		this.pre = ThreadLocal.withInitial(() -> null);
+		this.current = ThreadLocal.withInitial(() -> new CLhNode());
 	}
 
 	public void lock()
@@ -39,6 +47,41 @@ public class CLHLock
 		// 当该线程再次加锁的时候，使用其他线程不使用的前驱对象，
 		// 相当于new一个新但是又不浪费空间
 		current.set(pre.get());
+	}
+
+	public static void main(String[] arg)
+	{
+
+		CLHLock clhLock = new CLHLock();
+		Thread[] threads = new Thread[5];
+		for (int i = 0; i < 5; i++)
+		{
+			Thread thread = new Thread(() -> {
+				clhLock.lock();
+				System.out.println("线程" + Thread.currentThread() +
+						"使用" + clhLock.current.get() + "pre" + clhLock.pre.get());
+				clhLock.unlock();
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				clhLock.lock();
+				System.out.println("线程" + Thread.currentThread() +
+						"使用" + clhLock.current.get() + "pre" + clhLock.pre.get());
+				clhLock.unlock();
+			});
+			threads[i] = thread;
+		}
+
+		System.out.println("运行线程");
+		for (int i = 0; i < 5; i++)
+		{
+			threads[i].start();
+		}
 	}
 
 }
