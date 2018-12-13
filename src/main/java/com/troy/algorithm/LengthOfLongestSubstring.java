@@ -1,5 +1,8 @@
 package com.troy.algorithm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author: xuboru on 2018/10/15
  * 给定一个字符串，找出不含有重复字符的最长子串的长度。
@@ -23,9 +26,33 @@ package com.troy.algorithm;
  */
 public class LengthOfLongestSubstring
 {
-	//todo
-	public int lengthOfLongestSubstring(String s) {
-		return 0;
 
+	public int lengthOfLongestSubstring(String s)
+	{
+		int max = 0;
+		if (s == null || s.length() == 0)
+			return max;
+		Map<Character, Integer> map = new HashMap<>();
+		char[] chars = s.toCharArray();
+		max = 1;
+		map.put(chars[0], 0);
+		for (int i = 0, j = 1; (s.length() - i) > max && j < s.length(); j++)
+		{
+			Integer indexi = map.get(chars[j]);
+			if (indexi == null)
+			{
+				int le = j - i + 1;
+				if (le > max)
+					max = le;
+			}
+			else
+			{
+				for (int re = i; re < indexi; re++)
+					map.remove(chars[re]);
+				i = indexi + 1;
+			}
+			map.put(chars[j], j);
+		}
+		return max;
 	}
 }
