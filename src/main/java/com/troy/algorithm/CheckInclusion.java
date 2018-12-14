@@ -26,8 +26,8 @@ public class CheckInclusion
 		long s2v = 0;
 		for (int i = 0; i < s1l; i++)
 		{
-			s1v += Math.pow(2, s1.charAt(i) - 'a');
-			s2v += Math.pow(2, s2.charAt(i) - 'a');
+			s1v += 1 << (s1.charAt(i) - 'a');
+			s2v += 1 << (s2.charAt(i) - 'a');
 		}
 		int i = 0, j = s1l - 1;
 		while (j < s2l)
@@ -36,11 +36,11 @@ public class CheckInclusion
 				return true;
 			else
 			{
-				s2v -= Math.pow(2, s2.charAt(i) - 'a');
+				s2v -= 1 << (s2.charAt(i) - 'a');
 				i++;
 				j++;
 				if (j < s2l)
-					s2v += Math.pow(2, s2.charAt(j) - 'a');
+					s2v += 1 << (s2.charAt(j) - 'a');
 			}
 		}
 		return false;
