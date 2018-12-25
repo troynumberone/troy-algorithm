@@ -2,6 +2,8 @@ package com.troy.algorithm;
 
 /**
  * @author: xuboru on 2018/12/25
+ * 617. 合并二叉树
+ * https://leetcode-cn.com/problems/merge-two-binary-trees/
  */
 public class MergeTrees
 {
